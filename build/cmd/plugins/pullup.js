@@ -78,19 +78,24 @@ Util.extend(PullUp, Base, {
 		var self = this;
 		if (self.__isRender) return;
 		self.__isRender = true;
-		var containerCls = clsPrefix + "container";
-		var height = self.userConfig.height;
-		var pullup = self.pullup = document.createElement("div");
-		pullup.className = containerCls;
-		pullup.style.position = "absolute";
-		pullup.style.width = "100%";
-		pullup.style.height = height + "px";
-		pullup.style.bottom = -height + "px";
-		self.xscroll.container.appendChild(pullup);
+		if (!self.userConfig.container) {
+			var containerCls = clsPrefix + "container";
+			var height = self.userConfig.height;
+			var pullup = self.pullup = document.createElement("div");
+			pullup.className = containerCls;
+			pullup.style.position = "absolute";
+			pullup.style.width = "100%";
+			pullup.style.height = height + "px";
+			pullup.style.bottom = -height + "px";
+			pullup.style.textAlign = "center";
+			self.xscroll.container.appendChild(pullup);
+			Util.addClass(pullup, clsPrefix + self.status);
+			pullup.innerHTML = self.userConfig[self.status + "Content"] || self.userConfig.content;
+		} else {
+			self.pullup = self.userConfig.container
+		}
 		self.xscroll.boundry.expandBottom(self.userConfig.height);
 		self.status = 'up';
-		Util.addClass(pullup, clsPrefix + self.status);
-		pullup.innerHTML = self.userConfig[self.status + "Content"] || self.userConfig.content;
 		self._bindEvt();
 		return self;
 	},
@@ -141,9 +146,11 @@ Util.extend(PullUp, Base, {
 		if (status != "loading" && this.isLoading) return;
 		var prevVal = this.status;
 		this.status = status;
-		Util.removeClass(this.pullup, clsPrefix + prevVal)
-		Util.addClass(this.pullup, clsPrefix + status);
-		this.pullup.innerHTML = this.userConfig[status + "Content"];
+		if (!this.userConfig.container) {
+			Util.removeClass(this.pullup, clsPrefix + prevVal)
+			Util.addClass(this.pullup, clsPrefix + status);
+			this.pullup.innerHTML = this.userConfig[status + "Content"];
+		}
 		if (prevVal != status) {
 			this.trigger("statuschange", {
 				prevVal: prevVal,
