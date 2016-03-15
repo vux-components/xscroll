@@ -705,20 +705,25 @@ plugins_pulldown = function (exports) {
       if (self.__isRender)
         return;
       self.__isRender = true;
-      var containerCls = clsPrefix + 'container';
-      var height = self.userConfig.height || 60;
-      var pulldown = self.pulldown = document.createElement('div');
-      pulldown.className = containerCls;
-      pulldown.style.position = 'absolute';
-      pulldown.style.width = '100%';
-      pulldown.style.height = height + 'px';
-      pulldown.style.lineHeight = height + 'px';
-      pulldown.style.top = -height + 'px';
-      pulldown.style.textAlign = 'center';
-      self.xscroll.container.appendChild(pulldown);
-      self.status = 'up';
-      Util.addClass(pulldown, clsPrefix + self.status);
-      pulldown.innerHTML = self.userConfig[self.status + 'Content'] || self.userConfig.content;
+      if (!self.userConfig.container) {
+        var containerCls = clsPrefix + 'container';
+        var height = self.userConfig.height || 60;
+        var pulldown = self.pulldown = document.createElement('div');
+        pulldown.className = containerCls;
+        pulldown.style.position = 'absolute';
+        pulldown.style.width = '100%';
+        pulldown.style.height = height + 'px';
+        pulldown.style.lineHeight = height + 'px';
+        pulldown.style.top = -height + 'px';
+        pulldown.style.textAlign = 'center';
+        self.xscroll.container.appendChild(pulldown);
+        self.status = 'up';
+        Util.addClass(pulldown, clsPrefix + self.status);
+        pulldown.innerHTML = self.userConfig[self.status + 'Content'] || self.userConfig.content;
+      } else {
+        // has customed container
+        self.pulldown = self.userConfig.container;
+      }
       self._bindEvt();
       return self;
     },
@@ -736,10 +741,12 @@ plugins_pulldown = function (exports) {
     _changeStatus: function (status) {
       var prevVal = this.status;
       this.status = status;
-      Util.removeClass(this.pulldown, clsPrefix + prevVal);
-      Util.addClass(this.pulldown, clsPrefix + status);
-      if (this.userConfig[status + 'Content']) {
-        this.pulldown.innerHTML = this.userConfig[status + 'Content'];
+      if (!this.userConfig.container) {
+        Util.removeClass(this.pulldown, clsPrefix + prevVal);
+        Util.addClass(this.pulldown, clsPrefix + status);
+        if (this.userConfig[status + 'Content']) {
+          this.pulldown.innerHTML = this.userConfig[status + 'Content'];
+        }
       }
       if (prevVal != status) {
         this.trigger('statuschange', {
@@ -782,9 +789,9 @@ plugins_pulldown = function (exports) {
         //prevent default bounce
         e.preventDefault();
         xscroll.boundry.resetTop();
+        self._changeStatus('loading');
         xscroll.boundry.expandTop(height);
         xscroll.boundryCheckY(function () {
-          self._changeStatus('loading');
         });
         if (self.userConfig.autoRefresh) {
           clearTimeout(self.loadingItv);
