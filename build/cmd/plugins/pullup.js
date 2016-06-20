@@ -174,6 +174,22 @@ Util.extend(PullUp, Base, {
 		self.isLoading = false;
 		self._changeStatus("up");
 		return self;
+	},
+	stop: function() {
+		var self = this;
+		var xscroll = self.xscroll;
+		self.isLoading = false;
+		self._changeStatus("stop");
+		self.pluginDestructor()
+		return self;
+	},
+	restart: function() {
+		var self = this;
+		var xscroll = self.xscroll;
+		self.isLoading = false;
+		self._changeStatus("default");
+		self.render()
+		return self;
 	}
 });
 
