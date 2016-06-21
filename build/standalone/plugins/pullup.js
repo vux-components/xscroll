@@ -804,6 +804,20 @@ plugins_pullup = function (exports) {
       self.isLoading = false;
       self._changeStatus('up');
       return self;
+    },
+    stop: function () {
+      var xscroll = this.xscroll;
+      this.isLoading = false;
+      this._changeStatus('stop');
+      this.pluginDestructor();
+      return this;
+    },
+    restart: function () {
+      var xscroll = this.xscroll;
+      this.isLoading = false;
+      this._changeStatus('default');
+      this.render();
+      return this;
     }
   });
   if (typeof module == 'object' && module.exports) {
