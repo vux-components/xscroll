@@ -176,7 +176,7 @@ Util.extend(PullUp, Base, {
 		return self;
 	},
 	stop: function() {
-		var xscroll = self.xscroll;
+		var xscroll = this.xscroll;
 		this.isLoading = false;
 		this._changeStatus("stop");
 		this.pluginDestructor()
