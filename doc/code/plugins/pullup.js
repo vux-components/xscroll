@@ -175,20 +175,18 @@ Util.extend(PullUp, Base, {
 		return self;
 	},
 	stop: function() {
-		var self = this;
 		var xscroll = self.xscroll;
-		self.isLoading = false;
-		self._changeStatus("stop");
-		self.pluginDestructor()
-		return self;
+		this.isLoading = false;
+		this._changeStatus("stop");
+		this.pluginDestructor()
+		return this;
 	},
 	restart: function() {
-		var self = this;
-		var xscroll = self.xscroll;
-		self.isLoading = false;
-		self._changeStatus("default");
-		self.render()
-		return self;
+		var xscroll = this.xscroll;
+		this.isLoading = false;
+		this._changeStatus("default");
+		this.render()
+		return this;
 	}
 });
 
