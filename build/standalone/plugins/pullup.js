@@ -700,6 +700,22 @@ plugins_pullup = function (exports) {
       self._evtBinded = false;
     },
     /**
+    * disable the plugin
+    * @memberOf PullUp
+    * @override Base
+    * @return {PullUp}
+    */
+    pluginDisable: function () {
+      var self = this;
+      self.userConfig.container || Util.remove(self.pullup);
+      self.xscroll.off('scrollend', self._scrollEndHandler, self);
+      self.xscroll.off('scroll', self._scrollHandler, self);
+      self.xscroll.off('pan', self._panHandler, self);
+      self.xscroll.boundry.resetBottom();
+      self.__isRender = false;
+      self._evtBinded = false;
+    },
+    /**
     * render pullup plugin
     * @memberOf PullUp
     * @return {PullUp}
@@ -809,7 +825,7 @@ plugins_pullup = function (exports) {
       var xscroll = this.xscroll;
       this.isLoading = false;
       this._changeStatus('stop');
-      this.pluginDestructor();
+      this.pluginDisable();
       return this;
     },
     restart: function () {
