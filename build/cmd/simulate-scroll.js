@@ -88,6 +88,7 @@ Util.extend(SimuScroll, Core, {
     self.content.style.transformOrigin = "";
     self.off("touchstart mousedown", self._ontouchstart);
     self.off("touchmove", self._ontouchmove);
+    window.removeEventListener("resize", self.resizeHandler, self);
     self.destroyScrollBars();
   },
   /**
@@ -266,14 +267,15 @@ Util.extend(SimuScroll, Core, {
     self.on("panstart", self._onpanstart, self);
     self.on("pan", self._onpan, self);
     self.on("panend", self._onpanend, self);
-    //window resize
-    window.addEventListener("resize", function(e) {
+    self.resizeHandler = function(e) {
       setTimeout(function() {
         self.resetSize();
         self.boundryCheck(0);
         self.render();
       }, 100);
-    }, self);
+    }
+    //window resize
+    window.addEventListener("resize", self.resizeHandler, self);
 
     return this;
   },
