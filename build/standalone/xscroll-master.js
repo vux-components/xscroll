@@ -4686,7 +4686,6 @@ simulate_scroll = function (exports) {
       self.boundryCheck();
       self._unPreventHref(e);
       if (!self.isRealScrollingX && !self.isRealScrollingY) {
-        self._triggerClick(e);
       }
       self._preventHref(e);
       self.isRealScrollingY = false;
