@@ -14,11 +14,14 @@ var RAF = window.requestAnimationFrame ||
 
 var vendors = ['webkit', 'moz', 'ms', 'o'];
 var cancelRAF = window.cancelAnimationFrame;
-for (var i = 0; i < vendors.length; i++) {
-	if (window[vendors[i] + 'CancelAnimationFrame'] || window[vendors[i] + 'CancelRequestAnimationFrame']) {
-		cancelRAF = window[vendors[i] + 'CancelAnimationFrame'] || window[vendors[i] + 'CancelRequestAnimationFrame'];
+if (!cancelRAF) {
+	for (var i = 0; i < vendors.length; i++) {
+		if (window[vendors[i] + 'CancelAnimationFrame'] || window[vendors[i] + 'CancelRequestAnimationFrame']) {
+			cancelRAF = window[vendors[i] + 'CancelAnimationFrame'] || window[vendors[i] + 'CancelRequestAnimationFrame'];
+		}
 	}
 }
+
 cancelRAF = cancelRAF || window.clearTimeout;
 
 function Bezier(x1, y1, x2, y2, epsilon) {
