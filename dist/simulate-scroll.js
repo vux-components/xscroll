@@ -245,11 +245,11 @@ Util.extend(SimuScroll, Core, {
   _ontap: function(e) {
     var self = this;
     self.boundryCheck();
-    self._unPreventHref(e);
+    // self._unPreventHref(e);
     if (!self.isRealScrollingX && !self.isRealScrollingY) {
       // self._triggerClick(e);
     }
-    self._preventHref(e);
+    // self._preventHref(e);
     self.isRealScrollingY = false;
     self.isRealScrollingY = false;
   },

@@ -564,8 +564,8 @@ events = function (exports) {
 base = function (exports) {
   var Util = util;
   var Events = events;
-  /**
-  @constructor
+  /** 
+  @constructor 
   @mixes Events
   */
   var Base = function () {
@@ -714,23 +714,20 @@ timer = function (exports) {
   var RAF = window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.oRequestAnimationFrame || window.msRequestAnimationFrame || function (callback) {
     window.setTimeout(callback, 1000 / 60);
   };
-
+  var vendors = [
+    'webkit',
+    'moz',
+    'ms',
+    'o'
+  ];
   var cancelRAF = window.cancelAnimationFrame;
   if (!cancelRAF) {
-    var vendors = [
-      'webkit',
-      'moz',
-      'ms',
-      'o'
-    ];
-
     for (var i = 0; i < vendors.length; i++) {
       if (window[vendors[i] + 'CancelAnimationFrame'] || window[vendors[i] + 'CancelRequestAnimationFrame']) {
         cancelRAF = window[vendors[i] + 'CancelAnimationFrame'] || window[vendors[i] + 'CancelRequestAnimationFrame'];
       }
     }
   }
-
   cancelRAF = cancelRAF || window.clearTimeout;
   function Bezier(x1, y1, x2, y2, epsilon) {
     var curveX = function (t) {
@@ -3769,7 +3766,7 @@ core = function (exports) {
   var BOUNDRY_CHECK_DURATION = 500;
   var BOUNDRY_CHECK_EASING = 'ease';
   var BOUNDRY_CHECK_ACCELERATION = 0.1;
-  /**
+  /** 
    * @constructor
    * @param {object} cfg config for scroll
    * @param {number} cfg.SCROLL_ACCELERATION  acceleration for scroll, min value make the scrolling smoothly
@@ -4016,7 +4013,7 @@ core = function (exports) {
       self.initFixed();
       self.trigger('afterrender', { type: 'afterrender' });
       self._bindEvt();
-      //update touch-action
+      //update touch-action 
       self.initTouchAction();
       return self;
     },
@@ -4087,7 +4084,7 @@ core = function (exports) {
         tap,
         pan
       ]);
-      //trigger all events
+      //trigger all events 
       self.mc.on('panstart pan panend pancancel pinchstart pinchmove pinchend pinchcancel pinchin pinchout', function (e) {
         self.trigger(e.type, e);
       });
@@ -4460,7 +4457,7 @@ simulate_scroll = function (exports) {
   var transformOrigin = Util.prefixStyle('transformOrigin');
   //transform
   var transform = Util.prefixStyle('transform');
-  /**
+  /** 
    * @constructor
    * @param {object} cfg config for scroll
    * @param {number} cfg.SCROLL_ACCELERATION  acceleration for scroll, min value make the scrolling smoothly
@@ -4495,7 +4492,7 @@ simulate_scroll = function (exports) {
     SimuScroll.superclass.constructor.call(this, cfg);
   }
   Util.extend(SimuScroll, Core, {
-    /**
+    /** 
      * @memberof SimuScroll
      * @override
      */
@@ -4689,10 +4686,10 @@ simulate_scroll = function (exports) {
     _ontap: function (e) {
       var self = this;
       self.boundryCheck();
-      self._unPreventHref(e);
+      // self._unPreventHref(e);
       if (!self.isRealScrollingX && !self.isRealScrollingY) {
       }
-      self._preventHref(e);
+      // self._preventHref(e);
       self.isRealScrollingY = false;
       self.isRealScrollingY = false;
     },
@@ -5144,7 +5141,7 @@ simulate_scroll = function (exports) {
 origin_scroll = function (exports) {
   var Util = util, Base = base, Core = core, Animate = animate;
   var transformOrigin = Util.prefixStyle('transformOrigin');
-  /**
+  /** 
    * @constructor
    * @param {object} cfg config for scroll
    * @extends XScroll
@@ -5205,7 +5202,7 @@ origin_scroll = function (exports) {
           });
         },
         useTransition: false,
-        //scrollTop
+        //scrollTop 
         end: callback
       };
       self.__timers.y = self.__timers.y || new Animate(self.renderTo, config);
@@ -5240,7 +5237,7 @@ origin_scroll = function (exports) {
           });
         },
         useTransition: false,
-        //scrollTop
+        //scrollTop 
         end: callback
       };
       self.__timers.x = self.__timers.x || new Animate(self.renderTo, config);
@@ -5322,7 +5319,7 @@ xscroll = function (exports) {
 }(xscroll);
 xscroll_master = function (exports) {
   var Util = util, Base = base, XScroll = xscroll;
-  /**
+  /** 
    * A master for multi-scrollers.
    * @constructor
    * @param {object} cfg - config for master.

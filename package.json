@@ -1,6 +1,6 @@
 {
   "name": "vux-xscroll",
-  "version": "3.1.11",
+  "version": "3.1.12",
   "devDependencies": {
     "amdclean": "^2.3.0",
     "grunt": "^0.4.5",
